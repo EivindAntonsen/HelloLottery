@@ -6,10 +6,13 @@ namespace Lottery
     internal abstract class NumberSequence
     {
         public abstract List<int> Numbers();
+        protected const int Min = 1;
     }
 
     internal class Secondary : NumberSequence
     {
+        private const int Max = 10;
+        private const int Size = 2;
         private readonly List<int> numberSequence = new List<int>();
         private static readonly Random Random = new Random();
 
@@ -20,9 +23,10 @@ namespace Lottery
 
         public Secondary()
         {
-            while (numberSequence.Count != 2)
+
+            while (numberSequence.Count != Size)
             {
-                var number = Random.Next(1, 10);
+                var number = Random.Next(Min, Max);
 
                 if (!numberSequence.Contains(number))
                 {
@@ -34,6 +38,8 @@ namespace Lottery
 
     internal class Primary : NumberSequence
     {
+        private const int Max = 10;
+        private const int Size = 5;
         private readonly List<int> numberSequence = new List<int>();
         private static readonly Random Random = new Random();
 
@@ -44,9 +50,9 @@ namespace Lottery
 
         public Primary()
         {
-            while (numberSequence.Count != 5)
+            while (numberSequence.Count != Size)
             {
-                var number = Random.Next(1, 50);
+                var number = Random.Next(Min, Max);
 
                 if (!numberSequence.Contains(number))
                 {

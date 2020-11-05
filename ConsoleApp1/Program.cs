@@ -9,6 +9,7 @@ namespace Lottery
         static void Main(string[] args)
         {
             const int jackpotReward = 900000000;
+            const int ticketPrice = 25;
             var stopwatch = new Stopwatch();
             var winningTicket = new Ticket();
             var hasWon = false;
@@ -20,7 +21,7 @@ namespace Lottery
             while (!hasWon)
             {
                 var myTicket = new Ticket();
-                wallet -= 25;
+                wallet -= ticketPrice;
                 count += 1;
 
                 if (TicketIsJackpot(myTicket, winningTicket))
