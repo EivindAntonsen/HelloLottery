@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 
 namespace Lottery
 {
@@ -53,17 +54,13 @@ namespace Lottery
 
         private static bool TicketIsJackpot(Ticket ticket, Ticket winningTicket)
         {
-            var allSecondariesMatch = ticket.SecondarySequence().TrueForAll(number =>
-                winningTicket.SecondarySequence().Contains(number)
+            if (ticket.SecondarySequence().Any(number =>
+                !winningTicket.SecondarySequence().Contains(number))
+            ) return false;
+
+            return ticket.PrimarySequence().All(primaryNumber =>
+                winningTicket.PrimarySequence().Contains(primaryNumber)
             );
-
-            if (!allSecondariesMatch) return false;
-
-            var allPrimariesMatch = ticket.PrimarySequence().TrueForAll(number =>
-                winningTicket.PrimarySequence().Contains(number)
-            );
-
-            return allPrimariesMatch;
         }
     }
 }

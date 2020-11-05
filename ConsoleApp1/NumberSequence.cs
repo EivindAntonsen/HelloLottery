@@ -9,7 +9,7 @@ namespace Lottery
         protected const int Min = 1;
     }
 
-    internal class Secondary : NumberSequence
+    class Secondary : NumberSequence
     {
         private const int Max = 10;
         private const int Size = 2;
