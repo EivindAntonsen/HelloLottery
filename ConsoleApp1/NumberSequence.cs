@@ -38,7 +38,7 @@ namespace Lottery
 
     internal class Primary : NumberSequence
     {
-        private const int Max = 10;
+        private const int Max = 50;
         private const int Size = 5;
         private readonly List<int> numberSequence = new List<int>();
         private static readonly Random Random = new Random();
