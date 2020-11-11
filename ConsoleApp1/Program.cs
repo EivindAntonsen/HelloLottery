@@ -42,9 +42,7 @@ namespace Lottery
                 }
             }
 
-            var prizeDistribution = myPrizes.GroupBy(prize => prize)
-                .Select(eachPrize => Tuple.Create(eachPrize.Key, eachPrize.Count()))
-                .ToDictionary(x => x.Item1, x => x.Item2);
+            var prizeDistribution = GetPrizeDistribution(myPrizes);
 
             stopwatch.Stop();
             var runtime = stopwatch.ElapsedMilliseconds;
@@ -71,6 +69,13 @@ namespace Lottery
             Console.WriteLine("Sum after gambling: {0}",
                 wallet.ToString("C", CultureInfo.CurrentCulture)
             );
+        }
+
+        private static Dictionary<int, int> GetPrizeDistribution(List<int> myPrizes)
+        {
+            return myPrizes.GroupBy(prize => prize)
+                .Select(eachPrize => Tuple.Create(eachPrize.Key, eachPrize.Count()))
+                .ToDictionary(x => x.Item1, x => x.Item2);
         }
 
         private static Dictionary<Tuple<int, int>, int> CreatePrizeDictionary()
@@ -113,17 +118,6 @@ namespace Lottery
                 default:
                     return prizeDictionary.GetValueOrDefault(Tuple.Create(matchingPrimaries, matchingSecondaries));
             }
-        }
-
-        private static bool TicketIsJackpot(Ticket ticket, Ticket winningTicket)
-        {
-            if (ticket.SecondarySequence().Any(number =>
-                !winningTicket.SecondarySequence().Contains(number))
-            ) return false;
-
-            return ticket.PrimarySequence().All(primaryNumber =>
-                winningTicket.PrimarySequence().Contains(primaryNumber)
-            );
         }
     }
 }
