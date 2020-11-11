@@ -7,6 +7,7 @@ namespace Lottery
     {
         public abstract List<int> Numbers();
         protected const int Min = 1;
+        protected static readonly Random Random = new Random();
     }
 
     class Secondary : NumberSequence
@@ -14,7 +15,7 @@ namespace Lottery
         private const int Max = 10;
         private const int Size = 2;
         private readonly List<int> numberSequence = new List<int>();
-        private static readonly Random Random = new Random();
+        
 
         public override List<int> Numbers()
         {
@@ -28,10 +29,7 @@ namespace Lottery
             {
                 var number = Random.Next(Min, Max);
 
-                if (!numberSequence.Contains(number))
-                {
-                    numberSequence.Add(number);
-                }
+                if (!numberSequence.Contains(number)) numberSequence.Add(number);
             }
         }
     }
@@ -41,7 +39,6 @@ namespace Lottery
         private const int Max = 50;
         private const int Size = 5;
         private readonly List<int> numberSequence = new List<int>();
-        private static readonly Random Random = new Random();
 
         public override List<int> Numbers()
         {
@@ -54,10 +51,7 @@ namespace Lottery
             {
                 var number = Random.Next(Min, Max);
 
-                if (!numberSequence.Contains(number))
-                {
-                    numberSequence.Add(number);
-                }
+                if (!numberSequence.Contains(number)) numberSequence.Add(number);
             }
         }
     }
