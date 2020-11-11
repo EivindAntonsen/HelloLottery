@@ -11,6 +11,7 @@ namespace Lottery
         static void Main(string[] args)
         {
             var prizeDictionary = CreatePrizeDictionary();
+            var rewardDictionary = CreateRewardDictionary();
             const int jackpotReward = 900000000;
             const int ticketPrice = 25;
             var stopwatch = new Stopwatch();
@@ -33,6 +34,9 @@ namespace Lottery
                 if (myPrize > 0)
                 {
                     myPrizes.Add(myPrize);
+                    var reward = rewardDictionary.GetValueOrDefault(myPrize);
+                    wallet += reward;
+
                     if (myPrize == 1) wonJackpot = true;
                 }
 
@@ -57,10 +61,20 @@ namespace Lottery
 
             foreach (var (prize, amountOfPrize) in prizeDistribution)
             {
-                Console.WriteLine("prize: {0}, {1} ({2})",
+                var asPercentageOfAllPrizes = (double) amountOfPrize / totalPrizes;
+                var totalPayoutForThisPrize = amountOfPrize * rewardDictionary.GetValueOrDefault(prize);
+                var totalMoneySpentOnThisPrize = amountOfPrize * -ticketPrice;
+
+                Console.WriteLine("prize: {0}, " +
+                                  "amount: {1}, " +
+                                  "percentage of prizes: {2}, " +
+                                  "total payout for prize: {3} " +
+                                  "total spent for prize: {4}",
                     prize.ToString(),
-                    ((double) amountOfPrize / totalPrizes).ToString("P4", CultureInfo.CurrentCulture),
-                    amountOfPrize.ToString()
+                    amountOfPrize.ToString(),
+                    asPercentageOfAllPrizes.ToString("P4", CultureInfo.CurrentCulture),
+                    totalPayoutForThisPrize.ToString("C", CultureInfo.CurrentCulture),
+                    totalMoneySpentOnThisPrize.ToString("C", CultureInfo.CurrentCulture)
                 );
             }
 
@@ -94,6 +108,25 @@ namespace Lottery
                 {Tuple.Create(3, 0), 10},
                 {Tuple.Create(1, 2), 11},
                 {Tuple.Create(2, 1), 12}
+            };
+        }
+
+        private static Dictionary<int, int> CreateRewardDictionary()
+        {
+            return new Dictionary<int, int>
+            {
+                {1, 417301244},
+                {2, 13652113},
+                {3, 1088812},
+                {4, 43143},
+                {5, 2463},
+                {6, 1119},
+                {7, 597},
+                {8, 224},
+                {9, 181},
+                {10, 160},
+                {11, 106},
+                {12, 85}
             };
         }
 
